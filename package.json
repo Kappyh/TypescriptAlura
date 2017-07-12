@@ -1,0 +1,24 @@
+{
+  "name": "alurabank",
+  "version": "1.0.0",
+  "description": "Curso do Alura de Typescript :)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc",
+    "start":"tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kappyh/TypescriptAlura.git"
+  },
+  "author": "Gabriela Mendes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kappyh/TypescriptAlura/issues"
+  },
+  "homepage": "https://github.com/Kappyh/TypescriptAlura#readme",
+  "devDependencies": {
+    "typescript": "^2.3.2"
+  }
+}
