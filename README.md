@@ -1,7 +1,8 @@
 # TypescriptAlura
 App criado durante o curso de Typescript do Alura
 
-
+Anotações & Observações
+---------------------------------
 Dependencias de desenvolvimento:
 
 systemjs: Carregar os módulos ecmascript 2015 
