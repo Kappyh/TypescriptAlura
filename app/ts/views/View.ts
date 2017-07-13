@@ -1,3 +1,5 @@
+import { logarTempoDeExecucao } from '../helpers/decorators/index';
+
 export abstract class View<T> {
 
     private _elemento: JQuery;
@@ -9,14 +11,11 @@ export abstract class View<T> {
         this._escape = escape;
     }
 
+    @logarTempoDeExecucao()
     update(model: T) {
-
-        const t1 = performance.now();
 
         this._elemento.html(this.template(model));
 
-        const t2 = performance.now();
-        console.log(`Tempo de execução do método update(): ${(t2 - t1) / 1000} segundos`);
     }
 
     abstract template(model: T): string;
