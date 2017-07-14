@@ -1,6 +1,9 @@
 import { NegociacoesView, MensagemView } from '../views/index';
-import { Negociacoes, Negociacao } from '../models/index'
-import { logarTempoDeExecucao, domInject } from "../helpers/decorators/index";
+import { Negociacoes, Negociacao, NegociacaoParcial } from '../models/index'
+import { logarTempoDeExecucao, domInject, throttle } from "../helpers/decorators/index";
+import { NegociacaoService } from "../services/index";
+
+import { imprime } from '../helpers/index';
 
 export class NegociacaoController {
 
@@ -17,6 +20,8 @@ export class NegociacaoController {
 
     private _negociacoesView = new NegociacoesView('#negociacoesView');
     private _mensagemView = new MensagemView('#mensagemView');
+
+    private _service = new NegociacaoService();
 
     constructor() {
         this._negociacoesView.update(this._negociacoes);
@@ -43,11 +48,30 @@ export class NegociacaoController {
         this._negociacoes.adiciona(negociacao);
         this._negociacoesView.update(this._negociacoes);
         this._mensagemView.update('Negociação adicionada com sucesso!');
+
+        //para imprimir a negociação
+        imprime(negociacao, this._negociacoes);
     }
 
     private _ehDiaUtil(data: Date) {
 
         return data.getDay() != DiaDaSemana.Sabado && data.getDay() != DiaDaSemana.Domingo;
+    }
+
+    @throttle()
+    importaDados() {
+
+        this._service
+            .obterNegociacoes(res => {
+                if(res.ok) return res;
+                throw new Error(res.statusText);
+            })
+            .then(negociacoes => {
+                negociacoes.forEach(negociacao => 
+                    this._negociacoes.adiciona(negociacao));
+                this._negociacoesView.update(this._negociacoes);
+            });
+
     }
 }
 
